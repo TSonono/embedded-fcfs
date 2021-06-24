@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 3.4)
 project(fcfs)
 
 set(EXTERNAL_DIR ${CMAKE_SOURCE_DIR}/external)
-set(UNITY_DIR ${EXTERNAL_DIR}/Unity)
+set(CMOCK_DIR ${EXTERNAL_DIR}/cmock)
+set(UNITY_DIR ${CMOCK_DIR}/vendor/unity)
 set(LWRB_DIR ${EXTERNAL_DIR}/lwrb/lwrb)
 
 option(WITH_COVERAGE "Enable coverage output" Off)
+option(BUILD_TESTS "Build the tests" Off)
 
 set(CMAKE_MODULE_PATH "${EXTERNAL_DIR}/sanitizers-cmake/cmake;${EXTERNAL_DIR}/cmake-modules" ${CMAKE_MODULE_PATH})
 

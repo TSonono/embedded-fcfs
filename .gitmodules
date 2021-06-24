@@ -7,3 +7,6 @@
 [submodule "external/lwrb"]
 	path = external/lwrb
 	url = https://github.com/MaJerle/lwrb.git
+[submodule "external/cmock"]
+	path = external/cmock
+	url = https://github.com/throwtheswitch/cmock.git
