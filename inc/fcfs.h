@@ -14,14 +14,48 @@ extern "C" {
 
 /*======= Includes ==========================================================*/
 
-#include <stdbool.h>
+#include "lwrb/lwrb.h"
+#include <stddef.h>
 
 /*======= Public macro definitions ==========================================*/
-/*======= Type Definitions and declarations =================================*/
+
+#ifndef FCFS_EVENT_QUEUE_LENGTH
+#define FCFS_EVENT_QUEUE_LENGTH 20
+#endif
+
+#ifndef FCFS_MAX_EVENT_DATA_LENGTH
+#define FCFS_MAX_EVENT_DATA_LENGTH 2
+#endif
+
+/*======= Type Definitions and declarations* =================================*/
+
+typedef enum fcfs_ret_code_e {
+    FCFS_SUCCESS = 0,
+    FCFS_BAD_PARAM,
+    FCFS_OUT_OF_MEMORY,
+    FCFS_UNKNOWN_ERROR,
+    FCFS_BAD_QUEUE_DATA,
+    FCFS_EVENT_DATA_TOO_LONG,
+    FCFS_BAD_STATE,
+    FCFS_NOT_INITIALIZED,
+} fcfs_ret_code;
+
+typedef void (*fcfs_event_callback)(void *event_data, size_t data_size);
+
 /*======= Public variable declarations ======================================*/
 /*======= Public function declarations ======================================*/
 
-bool fcfs_init(void);
+/**
+ * @brief Initializes the fcfs library
+ *
+ */
+fcfs_ret_code fcfs_init(void);
+
+
+fcfs_ret_code fcfs_execute(void);
+
+fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
+                             size_t data_size);
 
 #ifdef __cplusplus
 }
