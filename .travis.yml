@@ -13,8 +13,8 @@ addons:
     - gcovr
 
 before_script:
-- mkdir -p build && cd build
-- cmake .. -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On
+- cmake -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On -B build
+- cd build
 - cmake --build .
 - cd ..
 
