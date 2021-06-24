@@ -1,7 +1,7 @@
 language: cpp
 dist: focal
 compiler:
-  - clang
+  - gcc
 os:
   - linux
 
@@ -11,12 +11,10 @@ addons:
     - cmake
     - lcov
     - gcovr
-    - llvm-10
-    - cppcheck
 
 before_script:
 - mkdir -p build && cd build
-- cmake .. -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On
+- cmake .. -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On
 - cmake --build .
 - cd ..
 
