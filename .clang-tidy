@@ -1,0 +1,9 @@
+Checks: '
+bugprone-*,
+cert-*,
+clang-analyzer-*.
+google-*,
+linuxkernel-*,
+performance-*,
+portability-*,
+'

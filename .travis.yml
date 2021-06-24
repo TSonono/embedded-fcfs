@@ -1,0 +1,25 @@
+language: cpp
+dist: focal
+compiler:
+  - clang
+os:
+  - linux
+
+addons:
+  apt:
+    packages:
+    - cmake
+    - lcov
+    - gcovr
+    - llvm-10
+    - cppcheck
+
+before_script:
+- mkdir -p build && cd build
+- cmake .. -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On
+- cmake --build .
+- cd ..
+
+script:
+  - cd build && make test && make coverage
+  - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"

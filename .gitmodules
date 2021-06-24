@@ -1,0 +1,12 @@
+[submodule "external/cmake-modules"]
+	path = external/cmake-modules
+	url = https://github.com/bilke/cmake-modules.git
+[submodule "external/sanitizers-cmake"]
+	path = external/sanitizers-cmake
+	url = https://github.com/arsenm/sanitizers-cmake.git
+[submodule "external/Unity"]
+	path = external/Unity
+	url = https://github.com/ThrowTheSwitch/Unity.git
+[submodule "external/lwrb"]
+	path = external/lwrb
+	url = https://github.com/MaJerle/lwrb.git
