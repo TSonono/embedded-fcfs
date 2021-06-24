@@ -13,10 +13,15 @@ extern "C" {
  */
 
 /*======= Includes ==========================================================*/
+
+#include <stdbool.h>
+
 /*======= Public macro definitions ==========================================*/
 /*======= Type Definitions and declarations =================================*/
 /*======= Public variable declarations ======================================*/
 /*======= Public function declarations ======================================*/
+
+bool fcfs_init(void);
 
 #ifdef __cplusplus
 }
