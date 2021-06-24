@@ -1,5 +1,8 @@
 # Light Weight "First Come, First Served" Scheduler in C
 
+[![Build Status](https://www.travis-ci.com/TSonono/embedded-fcfs.svg?branch=main)](https://www.travis-ci.com/TSonono/embedded-fcfs)
+[![codecov](https://codecov.io/gh/TSonono/embedded-fcfs/branch/main/graph/badge.svg?token=QUAP8N8V1H)](https://codecov.io/gh/TSonono/embedded-fcfs)
+
 This library is a generic "first come, first served" scheduler written in C, optimized for embedded. It follows the C99 standard, and only has one dependency (a fifo library).
 
 ## Goals
