@@ -20,7 +20,7 @@ extern "C" {
 /*======= Public macro definitions ==========================================*/
 
 #ifndef FCFS_EVENT_QUEUE_LENGTH
-#define FCFS_EVENT_QUEUE_LENGTH 20
+#define FCFS_EVENT_QUEUE_LENGTH 15
 #endif
 
 #ifndef FCFS_MAX_EVENT_DATA_LENGTH
