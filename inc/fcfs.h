@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 #ifndef FCFS_MAX_EVENT_DATA_LENGTH
-#define FCFS_MAX_EVENT_DATA_LENGTH 2
+#define FCFS_MAX_EVENT_DATA_LENGTH 1
 #endif
 
 /*======= Type Definitions and declarations* =================================*/
@@ -35,7 +35,6 @@ typedef enum fcfs_ret_code_e {
     FCFS_OUT_OF_MEMORY,
     FCFS_UNKNOWN_ERROR,
     FCFS_BAD_QUEUE_DATA,
-    FCFS_EVENT_DATA_TOO_LONG,
     FCFS_BAD_STATE,
     FCFS_NOT_INITIALIZED,
 } fcfs_ret_code;

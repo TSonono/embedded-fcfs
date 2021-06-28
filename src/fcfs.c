@@ -60,6 +60,7 @@ fcfs_ret_code fcfs_execute(void) {
             lwrb_read(&queue, &current_event, sizeof(struct fcfs_event));
 
         if ((n_read > 0) && (n_read != sizeof(struct fcfs_event))) {
+            // Data in event queue has been corrupted
             return FCFS_BAD_QUEUE_DATA;
         } else if (0 == n_read) {
             // No events left in queue
@@ -87,15 +88,21 @@ fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
         return FCFS_NOT_INITIALIZED;
     }
 
+    if (NULL == event) {
+        return FCFS_BAD_PARAM;
+    }
+
     if (data_size > FCFS_MAX_EVENT_DATA_LENGTH) {
-        return FCFS_EVENT_DATA_TOO_LONG;
+        return FCFS_BAD_PARAM;
     }
 
     struct fcfs_event event_to_add = {0};
     event_to_add.event = event;
-    if ((event != NULL) && (data_size > 0)) {
+    if ((event_data != NULL) && (data_size > 0)) {
         event_to_add.event_data_len = data_size;
         memcpy(event_to_add.event_data, event_data, data_size);
+    } else if ((event_data != NULL) && (0 == data_size)) {
+        return FCFS_BAD_PARAM;
     } else {
         event_to_add.event_data_len = 0;
     }
