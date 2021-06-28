@@ -8,6 +8,7 @@ set(LWRB_DIR ${EXTERNAL_DIR}/lwrb/lwrb)
 
 option(WITH_COVERAGE "Enable coverage output" Off)
 option(BUILD_TESTS "Build the tests" Off)
+option(STACK_USAGE_32 "Build in 32-bit mode and get stack usage info" Off)
 
 set(CMAKE_MODULE_PATH "${EXTERNAL_DIR}/sanitizers-cmake/cmake;${EXTERNAL_DIR}/cmake-modules;${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
@@ -19,6 +20,10 @@ endif(WITH_COVERAGE)
 find_package(Sanitizers)
 
 enable_testing()
+
+if(STACK_USAGE_32)
+    add_compile_options(-fstack-usage -m32)
+endif(STACK_USAGE_32)
 
 add_subdirectory(src)
 if(BUILD_TESTS)

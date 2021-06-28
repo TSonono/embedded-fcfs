@@ -18,6 +18,12 @@ This library is a generic "first come, first served" scheduler written in C, opt
 ## Using the library
 If you add this to your project as a submodule recursively, one way is to link it to your project using cmake by adding the root directory of this repo as a subdirectory. If your project is not cmake based, you can manually add fcfs.c and lwrb.c (fifo library) among the compiled and linked files in your project. You would also have to add the include directories inc/ and external/lwrb/lwrb/src/include.
 
+### Configuration
+The library allows for configuring the event queue length and the maximum event data length using two defines. The default values are 15 for the event queue length and 1 for the maximum event data length. The two defines are `FCFS_EVENT_QUEUE_LENGTH` and `FCFS_MAX_EVENT_DATA_LENGTH`.
+
+# Stack usage
+The library uses statically allocated memory that is allocated throughout the lifetime of the application based on the length of the event queue and the maximum event data length. It's recommended that the maximum event data length is 1 since every increment of this parameter increases the persistent stack usage with the event queue length. In a 32-bit system, with a maximum event data length of 1, the persistent stack usage is `FCFS_EVENT_QUEUE_LENGTH` * 8. You also need 48 bytes of RAM (in stack) free when making calls to executing the scheduler or add to the event queue (assuming maximum event data length of 1 in 32-bit architectures).
+
 ## Build (for development)
 ```bash
 cmake -B build

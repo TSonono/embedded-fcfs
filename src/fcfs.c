@@ -24,7 +24,7 @@
 struct fcfs_event {
     fcfs_event_callback event;
     uint8_t event_data[FCFS_MAX_EVENT_DATA_LENGTH];
-    size_t event_data_len;
+    uint8_t event_data_len;
 };
 
 /*======= Local function prototypes =========================================*/
@@ -81,7 +81,7 @@ fcfs_ret_code fcfs_execute(void) {
     return FCFS_BAD_STATE;
 }
 
-// TODO: Include critical region abstraction here?
+// TODO: Call a critical region abstraction somewhere in here?
 fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
                              size_t data_size) {
     if (!lwrb_is_ready(&queue)) {
@@ -99,7 +99,7 @@ fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
     struct fcfs_event event_to_add = {0};
     event_to_add.event = event;
     if ((event_data != NULL) && (data_size > 0)) {
-        event_to_add.event_data_len = data_size;
+        event_to_add.event_data_len = (uint8_t)data_size;
         memcpy(event_to_add.event_data, event_data, data_size);
     } else if ((event_data != NULL) && (0 == data_size)) {
         return FCFS_BAD_PARAM;

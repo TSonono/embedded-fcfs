@@ -27,6 +27,10 @@ extern "C" {
 #define FCFS_MAX_EVENT_DATA_LENGTH 1
 #endif
 
+#if FCFS_MAX_EVENT_DATA_LENGTH > UINT8_MAX
+#error "FCFS_MAX_EVENT_DATA_LENGTH should be small, ideally only 1 byte. This library only supports values up to 255"
+#endif
+
 /*======= Type Definitions and declarations* =================================*/
 
 typedef enum fcfs_ret_code_e {
