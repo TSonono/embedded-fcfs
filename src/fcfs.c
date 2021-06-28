@@ -23,8 +23,10 @@
 
 struct fcfs_event {
     fcfs_event_callback event;
+#if FCFS_MAX_EVENT_DATA_LENGTH > 0
     uint8_t event_data[FCFS_MAX_EVENT_DATA_LENGTH];
     uint8_t event_data_len;
+#endif
 };
 
 /*======= Local function prototypes =========================================*/
@@ -66,10 +68,12 @@ fcfs_ret_code fcfs_execute(void) {
             // No events left in queue
             return FCFS_SUCCESS;
         } else {
-            size_t event_data_len = current_event.event_data_len;
-            if (event_data_len > 0) {
-                current_event.event(current_event.event_data, event_data_len);
-            } else {
+#if FCFS_MAX_EVENT_DATA_LENGTH > 0
+            if (current_event.event_data_len > 0) {
+                current_event.event(current_event.event_data, current_event.event_data_len);
+            } else
+#endif
+            {
                 current_event.event(NULL, 0);
             }
         }
@@ -92,12 +96,18 @@ fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
         return FCFS_BAD_PARAM;
     }
 
+    if ((FCFS_MAX_EVENT_DATA_LENGTH == 0) && (event_data != NULL)) {
+        return FCFS_BAD_PARAM;
+    }
+
     if (data_size > FCFS_MAX_EVENT_DATA_LENGTH) {
         return FCFS_BAD_PARAM;
     }
 
     struct fcfs_event event_to_add = {0};
     event_to_add.event = event;
+
+#if FCFS_MAX_EVENT_DATA_LENGTH > 0
     if ((event_data != NULL) && (data_size > 0)) {
         event_to_add.event_data_len = (uint8_t)data_size;
         memcpy(event_to_add.event_data, event_data, data_size);
@@ -106,6 +116,7 @@ fcfs_ret_code fcfs_add_event(fcfs_event_callback event, void *event_data,
     } else {
         event_to_add.event_data_len = 0;
     }
+#endif
 
     size_t n_written =
         lwrb_write(&queue, &event_to_add, sizeof(struct fcfs_event));

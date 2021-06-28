@@ -53,7 +53,7 @@ void simpleInitTest_should_success_fail(void)
     TEST_ASSERT_EQUAL(FCFS_BAD_STATE, ret);
 }
 
-void badAddToEventQueue_shouldSucceed(void)
+void badAddToEventQueue_should_fail(void)
 {
     fcfs_ret_code ret;
     uint8_t data = 5;
@@ -76,11 +76,19 @@ void simpleAddAndExecuteTest_shouldSucceed(void)
     TEST_ASSERT_EQUAL(FCFS_SUCCESS, ret);
 
     uint8_t data_to_pass = 100;
+#if FCFS_MAX_EVENT_DATA_LENGTH > 0
     ret = fcfs_add_event(event_2, &data_to_pass, sizeof(data_to_pass));
+#else
+    ret = fcfs_add_event(event_2, NULL, 0);
+#endif
     TEST_ASSERT_EQUAL(FCFS_SUCCESS, ret);
 
     event_1_ExpectWithArray(NULL, 0, 0);
+#if FCFS_MAX_EVENT_DATA_LENGTH > 0
     event_2_ExpectWithArray(&data_to_pass, sizeof(data_to_pass), sizeof(data_to_pass));
+#else
+    event_2_ExpectWithArray(NULL, 0, 0);
+#endif
     ret = fcfs_execute();
     TEST_ASSERT_EQUAL(FCFS_SUCCESS, ret);
 }
@@ -105,7 +113,7 @@ int main (void)
     RUN_TEST(simpleInitTest_should_success_fail);
     // Don't change the order of the above two tests
 
-    RUN_TEST(badAddToEventQueue_shouldSucceed);
+    RUN_TEST(badAddToEventQueue_should_fail);
     RUN_TEST(simpleAddAndExecuteTest_shouldSucceed);
     RUN_TEST(eventQueueOutOfMemory);
     return UNITY_END();
