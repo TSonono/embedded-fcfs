@@ -8,10 +8,9 @@ The repository must have been built recursively for retrieval of the necessary g
 ## Build
 
 ```bash
-mkdir build
+cmake -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DWITH_COVERAGE=On BUILD_TESTS=On -B build
 cd build
-cmake -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DWITH_COVERAGE=On ..
-make -j
+cmake --build .
 ```
 
 `-DSANITIZE_ADDRESS -DSANITIZE_UNDEFINED` are optional to pass to the cmake invocation. Including is a good idea to find more potential bugs, but if you don't have sanitizer libraries in stalled in your computer you can simply discard those optional features. Same applies to `-DWITH_COVERAGE`.
