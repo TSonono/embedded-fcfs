@@ -13,7 +13,7 @@ addons:
     - gcovr
 
 before_script:
-- cmake -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DWITH_COVERAGE=On -B build
+- cmake -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DFCFS_BUILD_TESTS=On -DFCFS_WITH_COVERAGE=On -B build
 - cd build
 - cmake --build .
 - cd ..
@@ -21,6 +21,6 @@ before_script:
 script:
   - cd build && make test && make coverage
   - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
-  - cmake -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DBUILD_TESTS=On -DFCFS_MAX_EVENT_DATA_LENGTH=0 ..
+  - cmake -DCMAKE_BUILD_TYPE='Debug' -DSANITIZE_ADDRESS=On -DSANITIZE_UNDEFINED=On -DFCFS_BUILD_TESTS=On -DFCFS_MAX_EVENT_DATA_LENGTH=0 ..
   - cmake --build .
   - make test

@@ -1,21 +1,22 @@
 cmake_minimum_required(VERSION 3.4)
 project(fcfs)
 
-set(EXTERNAL_DIR ${CMAKE_SOURCE_DIR}/external)
-set(CMOCK_DIR ${EXTERNAL_DIR}/cmock)
-set(UNITY_DIR ${CMOCK_DIR}/vendor/unity)
-set(LWRB_DIR ${EXTERNAL_DIR}/lwrb/lwrb)
+set(FCFS_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
+set(FCFS_EXTERNAL_DIR ${FCFS_ROOT}/external)
+set(FCFS_CMOCK_DIR ${FCFS_EXTERNAL_DIR}/cmock)
+set(FCFS_UNITY_DIR ${FCFS_CMOCK_DIR}/vendor/unity)
+set(FCFS_LWRB_DIR ${FCFS_EXTERNAL_DIR}/lwrb/lwrb)
 
-option(WITH_COVERAGE "Enable coverage output" Off)
-option(BUILD_TESTS "Build the tests" Off)
+option(FCFS_WITH_COVERAGE "Enable coverage output" Off)
+option(FCFS_BUILD_TESTS "Build the tests" Off)
 option(STACK_USAGE_32 "Build in 32-bit mode and get stack usage info" Off)
 
-set(CMAKE_MODULE_PATH "${EXTERNAL_DIR}/sanitizers-cmake/cmake;${EXTERNAL_DIR}/cmake-modules;${CMAKE_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
+set(CMAKE_MODULE_PATH "${FCFS_EXTERNAL_DIR}/sanitizers-cmake/cmake;${FCFS_EXTERNAL_DIR}/cmake-modules;${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 
-if(WITH_COVERAGE)
+if(FCFS_WITH_COVERAGE)
     include(CodeCoverage)
     append_coverage_compiler_flags()
-endif(WITH_COVERAGE)
+endif(FCFS_WITH_COVERAGE)
 
 find_package(Sanitizers)
 
@@ -26,7 +27,7 @@ if(STACK_USAGE_32)
 endif(STACK_USAGE_32)
 
 add_subdirectory(src)
-if(BUILD_TESTS)
+if(FCFS_BUILD_TESTS)
     include(cmake/cmock.cmake)
     add_subdirectory(test)
-endif(BUILD_TESTS)
+endif(FCFS_BUILD_TESTS)
